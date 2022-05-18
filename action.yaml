@@ -1,0 +1,25 @@
+# action.yml
+name: 'SonarQube Housekeeping'
+description: >- Action that will remove projects matching a specific prefix from SonarQube 
+  that contains a Jira project issue that is not present in the git remote heads'
+inputs:
+  sonarqube-host:
+    description: The URL of the SonarQube instance.
+    required: true
+  sonarqube-token:
+    description: A token for accessing the SonarQube instance.
+    required: true
+  sonarqube-project-prefix:
+    description: The prefix used in the SonarQube project key
+    required: true
+  jira-project-key:
+    description: The Jira project key
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.sonarqube-host }}
+    - ${{ inputs.sonarqube-token }}
+    - ${{ inputs.sonarqube-project-prefix }}
+    - ${{ inputs.jira-project-key }}    
